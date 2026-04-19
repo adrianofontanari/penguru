@@ -1,7 +1,7 @@
 {
   "name": "penguru",
   "version": "0.1.0",
-  "description": "Authoritative definitions research agent — finds official and industry sources for any domain concept",
+  "description": "Turn a single word into trustworthy deep domain expertise.",
   "author": "adrianofontanari",
   "skills": [
     "n1-definitions"
