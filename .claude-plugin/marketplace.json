@@ -1,0 +1,14 @@
+{
+  "name": "penguru",
+  "owner": {
+    "name": "adrianofontanari",
+    "url": "https://github.com/adrianofontanari"
+  },
+  "plugins": [
+    {
+      "name": "penguru",
+      "description": "Turn a single word into deep domain expertise. Node architecture for authoritative definitions, regulatory sources, and terminological distinctions.",
+      "source": "./"
+    }
+  ]
+}
