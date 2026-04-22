@@ -6,6 +6,10 @@
       "env": {
         "SCOPUS_API_KEY": "${SCOPUS_API_KEY}"
       }
+    },
+    "paper-search": {
+      "command": "uvx",
+      "args": ["paper-search-mcp"]
     }
   }
 }
