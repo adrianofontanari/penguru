@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "scopus": {
+      "command": "uvx",
+      "args": ["scopus-mcp"],
+      "env": {
+        "SCOPUS_API_KEY": "${SCOPUS_API_KEY}"
+      }
+    }
+  }
+}

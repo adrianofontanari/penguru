@@ -6,7 +6,7 @@
 
 LLMs are fast but untrustworthy when you need to build real expertise. They hallucinate sources, flatten nuance, and can't tell a regulator from a vendor. **penguru** is a Claude Code plugin built around a node architecture: each node targets a specific dimension of knowledge, from definitions to market intelligence to regulatory standards.
 
-The release plan is incremental. This first release covers definitions - the foundational node that grounds any concept in authoritative sources, separates what regulators say from what practitioners say, and flags commercial bias for what it is. Future releases will add nodes progressively, building toward a systematic and scientific approach to domain knowledge.
+The release plan is incremental. Each node adds a layer of knowledge — from foundational definitions to empirical evidence. Future releases will build toward a systematic and scientific approach to domain knowledge across 12 nodes.
 
 ## Skills
 
@@ -21,21 +21,50 @@ Produces a structured definitions document with:
 
 **Example output:** [`credit underwriting`](examples/credit-underwriting-N1.md)
 
+---
+
+### `/penguru:n4-literature <topic or question>`
+
+Maps the academic evidence layer — what peer-reviewed research actually says. Accepts a keyword, a phrase, or a natural language question (`what are the main risk factors for SME credit default?`) — the skill decomposes the input into academic search terms automatically.
+
+- Parallel search across Scopus, WebSearch, PubMed, SSRN, arXiv, Semantic Scholar
+- Deduplication by DOI — each paper counted once, best metadata kept
+- Systematic reviews and meta-analyses prioritized
+- Full-text analysis where open-access versions exist (arXiv, PMC, SSRN, Unpaywall)
+- Citation counts and author h-index enriched via Scopus
+- **Epistemic hygiene:** every threshold, benchmark, or "field standard" is traced to its primary source and classified as regulatory mandate, empirical finding, or convention by inertia
+- Evidence map: volume, consensus level, recency, dominant methodology
+
+**Optional enhancements:**
+- [Scopus API](https://dev.elsevier.com) — broader coverage and citation data (configure via `.mcp.json`)
+- [`paper-search-mcp`](https://github.com/openags/paper-search-mcp) — PDF download from 25+ sources
+
+**Example output:** [`credit underwriting`](examples/credit-underwriting-N4.md)
+
 ## Install
 
 ```bash
 # Clone
-git clone https://github.com/adrianofontanari/penguru ~/Projects/penguru
+git clone https://github.com/adrianofontanari/penguru ~/GitHub/penguru
 
 # Use in any Claude Code project
-claude --plugin-dir ~/Projects/penguru
+claude --plugin-dir ~/GitHub/penguru
 ```
 
 Then invoke with:
 ```
 /penguru:n1-definitions credit underwriting
 /penguru:n1-definitions probability of default
-/penguru:n1-definitions AML transaction monitoring
+/penguru:n4-literature credit underwriting
+/penguru:n4-literature "what are the main risk factors for SME credit default?"
+/penguru:n4-literature AML transaction monitoring
+```
+
+### Optional: paper-search-mcp (enhances N4)
+
+```bash
+# Install for deeper academic search (25+ sources, PDF download)
+uvx paper-search-mcp
 ```
 
 ## Output example
@@ -68,6 +97,7 @@ Then invoke with:
 
 - [x] N1 — Foundational Definitions
 - [ ] N2 — Domain Context
+- [x] N4 — Academic Literature (systematic reviews, seminal papers, evidence map)
 - [ ] N6 — Technical Layer
 - [ ] N7 — Regulatory & Standards
 - [ ] Full T-Shaped Research Agent (12 nodes)
