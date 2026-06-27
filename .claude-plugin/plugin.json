@@ -1,9 +1,10 @@
 {
   "name": "penguru",
   "version": "0.1.0",
-  "description": "Turn a single word into trustworthy deep domain expertise.",
+  "description": "Trusted snapshot research agent — one word into a 3-minute, source-cited orientation on any topic.",
   "author": "adrianofontanari",
   "skills": [
-    "n1-definitions"
+    "n1-definitions",
+    "n4-literature"
   ]
 }

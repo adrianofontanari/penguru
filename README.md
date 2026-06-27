@@ -2,112 +2,60 @@
 
 ![penguru](penguru-icon.png)
 
-> Turn a single word into deep domain expertise.
+> A trusted snapshot research agent. One word in → a 3-minute, source-cited orientation on anything.
 
-LLMs are fast but untrustworthy when you need to build real expertise. They hallucinate sources, flatten nuance, and can't tell a regulator from a vendor. **penguru** is a Claude Code plugin built around a node architecture: each node targets a specific dimension of knowledge, from definitions to market intelligence to regulatory standards.
+You know nothing about a topic and need a footing — fast and trustworthy. LLMs are fast but hallucinate sources, flatten nuance, and can't tell a regulator from a vendor. Deep research tools (Undermind, Elicit, Perplexity Deep Research) are thorough but slow and narrow.
 
-The release plan is incremental. Each node adds a layer of knowledge — from foundational definitions to empirical evidence. Future releases will build toward a systematic and scientific approach to domain knowledge across 12 nodes.
+**penguru sits before them.** It gives you the first three minutes on any topic: broad across every dimension — definitions, market, regulation, history, key people, patents — shallow per dimension, every claim sourced or marked *not found*. Then it hands you off to the deep tools with ready-made queries.
+
+Topics can be abstract (`AML scoring`, `ePRO`) or concrete product ideas (`ergonomic chair`, `wifi pill dispenser`) — for products it scans patents and startups too.
 
 ## Skills
 
+### `/penguru:snapshot <topic>` — flagship
+
+A broad-shallow pass over all 12 research nodes, output as two artefacts in `./penguru-research/<topic>/`:
+- **`Snapshot.md`** — a Marp slide deck, a 3-minute skim
+- **`Reading.md`** — a reference document with the fuller detail per node
+
+Trust is the point: source-typed claims (✅ regulator · ◽ independent · ⚠️ vendor · 💬 opinion), an epistemic rule that flags every number as mandate / empirical / convention, and an explicit *not found* instead of invention.
+
+> Design: [`skills/snapshot/SPEC.md`](skills/snapshot/SPEC.md).
+
 ### `/penguru:n1-definitions <topic>`
 
-Produces a structured definitions document with:
-- ≥2 definitions from independent authoritative sources (regulators, standards bodies)
-- Industry definitions — Tier 1 (independent) and Tier 2 (vendor, flagged)
-- Terminological distinctions (what gets confused with this concept)
-- Minimum glossary
-- Who standardizes the concept and where
-
-**Example output:** [`credit underwriting`](examples/credit-underwriting-N1.md)
-
----
+Authoritative definitions, ≥2 independent sources, terminological distinctions, glossary, who standardizes the concept. Industry definitions split into Tier 1 (independent) and Tier 2 (vendor, flagged). **Example:** [`credit underwriting`](examples/credit-underwriting-N1.md)
 
 ### `/penguru:n4-literature <topic or question>`
 
-Maps the academic evidence layer — what peer-reviewed research actually says. Accepts a keyword, a phrase, or a natural language question (`what are the main risk factors for SME credit default?`) — the skill decomposes the input into academic search terms automatically.
-
-- Parallel search across Scopus, WebSearch, PubMed, SSRN, arXiv, Semantic Scholar
-- Deduplication by DOI — each paper counted once, best metadata kept
-- Systematic reviews and meta-analyses prioritized
-- Full-text analysis where open-access versions exist (arXiv, PMC, SSRN, Unpaywall)
-- Citation counts and author h-index enriched via Scopus
-- **Epistemic hygiene:** every threshold, benchmark, or "field standard" is traced to its primary source and classified as regulatory mandate, empirical finding, or convention by inertia
-- Evidence map: volume, consensus level, recency, dominant methodology
-
-**Optional enhancements:**
-- [Scopus API](https://dev.elsevier.com) — broader coverage and citation data (configure via `.mcp.json`)
-- [`paper-search-mcp`](https://github.com/openags/paper-search-mcp) — PDF download from 25+ sources
-
-**Example output:** [`credit underwriting`](examples/credit-underwriting-N4.md)
+The academic evidence layer — systematic reviews, seminal papers, evidence map. Accepts a keyword, phrase, or natural-language question. Epistemic hygiene: every threshold is traced to its primary source and classified. Optional: [Scopus API](https://dev.elsevier.com), [`paper-search-mcp`](https://github.com/openags/paper-search-mcp). **Example:** [`credit underwriting`](examples/credit-underwriting-N4.md)
 
 ## Install
 
 ```bash
-# Clone
 git clone https://github.com/adrianofontanari/penguru ~/GitHub/penguru
-
-# Use in any Claude Code project
 claude --plugin-dir ~/GitHub/penguru
 ```
 
-Then invoke with:
 ```
-/penguru:n1-definitions credit underwriting
+/penguru:snapshot AML scoring
+/penguru:snapshot wifi pill dispenser
 /penguru:n1-definitions probability of default
-/penguru:n4-literature credit underwriting
-/penguru:n4-literature "what are the main risk factors for SME credit default?"
-/penguru:n4-literature AML transaction monitoring
-```
-
-### Optional: paper-search-mcp (enhances N4)
-
-```bash
-# Install for deeper academic search (25+ sources, PDF download)
-uvx paper-search-mcp
-```
-
-## Output example
-
-```
-## Authoritative Definitions
-
-### EBA — GL/2020/06 Loan Origination and Monitoring
-> "Credit is granted to borrowers who, to the institution's best knowledge
-> at the time of granting the credit, will be able to fulfil the terms and
-> conditions of the credit agreement."
-
-### OCC (Office of the Comptroller of the Currency)
-> "Underwriting refers to the terms and conditions under which [banks]
-> extend or renew credit, such as financial and collateral requirements,
-> repayment programs, maturities, pricing, and covenants."
-
-## Industry Definitions
-
-### Fintegrationfs — Practitioner (independent)
-> "Underwriting is the process of assessing whether a borrower is a suitable risk."
-
-### Underwrite.ai — [vendor]
-> "Credit underwriting is the process of assessing whether a borrower is
-> likely to repay a loan."
-⚠️ vendor — not an independent source
+/penguru:n4-literature "main risk factors for SME credit default?"
 ```
 
 ## Roadmap
 
 - [x] N1 — Foundational Definitions
-- [ ] N2 — Domain Context
-- [x] N4 — Academic Literature (systematic reviews, seminal papers, evidence map)
-- [ ] N6 — Technical Layer
-- [ ] N7 — Regulatory & Standards
-- [ ] Full T-Shaped Research Agent (12 nodes)
-
-## Credits
-
-Icon generated by OpenAI ChatGPT (GPT 5.3).
-
-Plugin built with [Claude Code](https://claude.ai/code) - Claude Sonnet 4.6.
+- [x] N4 — Academic Literature
+- [ ] **`snapshot` — trusted 3-min snapshot across all 12 nodes (light)** ← current focus
+- [ ] Product/Idea mode — patent + startup scan
+- [ ] Per-node deep skills (N2, N5a, N6, N7, N9, N11, N12)
 
 ## Background
 
-Built on the T-Shaped Research Agent framework — a faceted knowledge model inspired by DIKW (Ackoff), Ranganathan's faceted classification, and Information Foraging Theory (Pirolli & Card).
+Built on a faceted knowledge model — DIKW (Ackoff), Ranganathan's faceted classification, Information Foraging Theory (Pirolli & Card), and learning-science principles (cite everything, respect working memory, reference documents over essays).
+
+## Credits
+
+Icon by OpenAI ChatGPT. Plugin built with [Claude Code](https://claude.ai/code).

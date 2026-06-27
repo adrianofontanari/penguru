@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "penguru",
-      "description": "Turn a single word into deep domain expertise. Node architecture for authoritative definitions, regulatory sources, and terminological distinctions.",
+      "description": "Trusted snapshot research agent. One word into a 3-minute, source-cited orientation on any topic — concept or product idea. Broad across 12 nodes, shallow per node, every claim sourced or marked not found.",
       "source": "./"
     }
   ]
