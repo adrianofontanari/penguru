@@ -181,14 +181,25 @@ curl -sIL --max-time 15 "<url>" | head -5
 - Drop the source, find another, or mark claim `source unverified — link dead`
 - List every dead-link drop in the trust-audit slide
 
-**Images** (medium/deep): same rule — only embed an image URL found on a fetched source that passes curl validation. Attribute `Source: [page-title] · [URL]`. Never guess or invent image URLs.
+**Images — MANDATORY, not optional.** medium/deep MUST embed **≥2 relevant images**; light ≥1 if the topic is even slightly visual. A snapshot with zero images is a failure for any topic a human would expect to *see* (a product, an org chart, a process, an anatomy/biology/physical thing — "if asked about the cell, obviously show a photo of the cell"). Abstract topics still have diagrams (process flow, risk matrix, architecture, timeline). Rules:
+- Only embed an image URL found on a fetched source that passes curl validation returning `image/*` content-type. Never guess or invent image URLs.
+- **Match the image to the topic type:**
+  - *Product / competitor topic* → pull a **real product screenshot from the competitor's own page**: WebFetch the page, grab the `og:image` meta and/or product-UI `<img>` CDN src (e.g. sanity.io, the vendor's `/media/…` path — prefix relative paths with the host), then curl-validate. Embed the 1–2 most on-topic players' UIs, captioned `Source: [vendor] ⚠️ (vendor screenshot)`.
+  - *Research-heavy topic* → pull a **figure from a paper**: try the arXiv HTML render (`arxiv.org/html/<id>` or `ar5iv.labs.arxiv.org/html/<id>`) and take a real `<img>` figure src. If the paper has no HTML version (404) or the figure URL can't be validated, **don't force it** — say so in the confirm step.
+  - *Otherwise* → diagram from Wikimedia/Commons (process flow, risk matrix, timeline, architecture).
+- **Hotlink-stable sources first:** `upload.wikimedia.org` (Wikipedia/Commons) is reliable and CC-licensed — prefer it for generic diagrams. Vendor CDNs (sanity.io, etc.) usually hotlink fine once validated; some block — always curl-check.
+- Validate with: `curl -sIL --max-time 15 -o /dev/null -w "%{http_code} %{content_type}" "<url>"` → keep only `200 image/*`.
+- Every image gets a caption that says what it shows + `Source: … (license)`.
+- If you genuinely cannot find ≥2 validated images, say so explicitly in the confirm step (don't silently ship zero).
 
 ---
 
 ## Step 5 — Write Reading.md
 
-Save to: `./penguru-research/$TOPIC - Reading.md`  
-(no per-topic subfolder — both notes live flat in `penguru-research/`, named after the keyword. Create `penguru-research/` if it doesn't exist.)
+**Output dir (`$OUT`):** `/Users/adrianofontanari/Library/Mobile Documents/iCloud~md~obsidian/Documents/AdryOS/Resources/Penguru` — notes live inside the Obsidian vault so wikilinks resolve and they show up in Obsidian. Create `$OUT` if it doesn't exist.
+
+Save to: `$OUT/$TOPIC - Reading.md`  
+(no per-topic subfolder — both notes live flat in `$OUT`, named after the keyword.)
 
 **Cross-link:** the first line of the note must be an Obsidian wikilink to its companion deck: `↪ [[$TOPIC - Snapshot]]`
 
@@ -225,10 +236,24 @@ Source: [URL] ✅/◽/⚠️
 
 ## Market & Players  *(Product mode: "Who Makes It + IP")*
 
-4–6 players. Funding/figures from public web only (press, TechCrunch) — tag vendor sources ⚠️.
+**Map the market, don't just list it.** Two-step, mandatory in medium/deep:
 
-| Player | What they do | Positioning | Source |
-|--------|-------------|-------------|--------|
+1. **Categories first** — segment the space into 3–6 functional categories (what each *role* does in the stack), then place players into them. Don't dump an undifferentiated vendor list.
+2. **Feature map** — for each player give concrete **key features**, a one-line **differentiator**, and **positioning**. Distinguish adjacent categories (e.g. signal-generator vs decision-engine vs data-platform) so the user sees *who competes on what*.
+
+**Query width:** beyond incumbent names + "best X software" lists (incumbent-biased — they miss recent late-stage players), always also run: `"$TOPIC" decisioning OR orchestration platform`, `"$TOPIC" startup funding series crunchbase`, and the direct names of any adjacent-category vendors you know. 4–8 players. Funding/figures from public web only — tag vendor sources ⚠️.
+
+```
+### Categories
+| Category | Role in the stack |
+|----------|-------------------|
+
+### Feature map
+| Player | Category | Key features | Differentiator | Positioning | Source |
+|--------|----------|--------------|----------------|-------------|--------|
+```
+
+End with a **positioning split**: one line per category naming the axis it competes on, + note that a real stack usually combines ≥2 categories.
 
 *(Product mode adds: IP/white space row)*
 
@@ -300,16 +325,16 @@ Source: [URL] ✅/◽/⚠️
 
 ## Step 6 — Distil Snapshot.md (Marp deck)
 
-Save to: `./penguru-research/$TOPIC - Snapshot.md` (flat in `penguru-research/`, no subfolder, named after the keyword)
+Save to: `$OUT/$TOPIC - Snapshot.md` (flat in `$OUT` = `…/AdryOS/Resources/Penguru`, no subfolder, named after the keyword)
 
 **Cross-link:** add an Obsidian wikilink back to the reading note right after the title slide's metadata line: `↪ [[$TOPIC - Reading]]`. Write it as **plain visible text**, never inside an HTML comment (`<!-- ... -->`) — Obsidian does not render wikilinks inside comments.
 
 **Theme wiring:** the deck frontmatter sets `theme: penguru`. The `penguru` theme lives in `skills/snapshot/assets/penguru.css` (registered via its `/* @theme penguru */` header). To render, point Marp at that file with `--theme-set`. Tell the user the exact command after saving, e.g.:
 
 ```bash
-marp "./penguru-research/$TOPIC - Snapshot.md" --theme-set <path-to>/skills/snapshot/assets/penguru.css --html -o "./penguru-research/$TOPIC - Snapshot.html"
+marp "$OUT/$TOPIC - Snapshot.md" --theme-set /Users/adrianofontanari/Projects/Penguru/skills/snapshot/assets/penguru.css --html -o "$OUT/$TOPIC - Snapshot.html"
 # or live preview:
-marp -p -w "./penguru-research/$TOPIC - Snapshot.md" --theme-set <path-to>/skills/snapshot/assets/penguru.css
+marp -p -w "$OUT/$TOPIC - Snapshot.md" --theme-set /Users/adrianofontanari/Projects/Penguru/skills/snapshot/assets/penguru.css
 ```
 
 (Without `--theme-set` Marp can't find `penguru` and falls back to the default theme.)
@@ -325,7 +350,7 @@ paginate: true
 
 **Slide count:** light ≈ 11 · medium 16–20 · deep 24–30  
 **Hard cap:** ~75 words per slide. Tables/bullets — no prose paragraphs.  
-**Images:** light = only if genuinely necessary to understand the topic; medium/deep = include relevant ones (validated URLs only, with caption crediting source).
+**Images:** MANDATORY (see Step 4) — medium/deep embed ≥2 validated images, light ≥1 if visual. Prefer Wikimedia/CC diagrams; validated URLs only, caption + source. Marp inline sizing: `![w:340](url)`. Zero images = failure.
 
 **Slide structure (light):**
 
@@ -455,6 +480,6 @@ Reply with:
 - Dimensions covered vs skipped
 - Biggest gap ("not found" items)
 - Dead links dropped (if any)
-- Files saved: `./penguru-research/$TOPIC - Snapshot.md` · `./penguru-research/$TOPIC - Reading.md` (cross-linked via Obsidian wikilinks)
+- Files saved: `$OUT/$TOPIC - Snapshot.md` · `$OUT/$TOPIC - Reading.md` (in the Obsidian vault, cross-linked via wikilinks)
 - Render command (the `marp … --theme-set …` line from Step 6) so the user can build the deck
 - Next: explore suggestions (3–5 concepts)
