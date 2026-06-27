@@ -10,8 +10,20 @@ penguru is **one one-shot skill**. Input a topic → output a **trusted, broad-s
 `<topic>` may be a concept (`AML scoring`, `ePRO`) **or a concrete product idea** (`golf`, `ergonomic chair`, `wifi pill dispenser`).
 
 Two artefacts in `./penguru-research/<topic>/`:
-- **`Snapshot.md`** — a Marp slide deck, ~11 slides, a 3-minute skim
-- **`Reading.md`** — a reference document, fuller (still light) detail per dimension
+- **`Snapshot.md`** — a Marp slide deck, a skim
+- **`Reading.md`** — a reference document, fuller detail per dimension
+
+## Modes (depth dial)
+
+`/penguru:snapshot <topic> [--light | --medium | --deep]` — **default `--light`** (zero friction). If no flag, light.
+
+| Mode | Read time | Coverage | Sources/dim | Images & tables |
+|---|---|---|---|---|
+| **light** (default) | ~3 min | core relevant dimensions | 1–2 | tables only when they clarify; images only if genuinely necessary |
+| **medium** | ~8 min | all relevant dimensions, fuller | 2–3, corroborated | include relevant tables **and images** (diagrams, charts, product/patent figures) |
+| **deep** | ~12 min | all relevant dimensions, deepest one-shot | 3+, cross-checked | rich tables and images throughout |
+
+Mode scales **volume** (sources, rows, slide count, reading-doc length) and image/table inclusion — **not** the trust rules, which are identical in every mode. The read-time target is the budget; overflow trims to the most load-bearing content first.
 
 ## Step 0 — Triage
 
@@ -60,9 +72,9 @@ The report ends by surfacing **3–5 adjacent concepts** worth a separate snapsh
 
 1. Triage. 2. Run relevant dimensions in parallel (batch WebSearch; one WebFetch per source worth quoting; stop at first 1–2 trustworthy sources per dimension). 3. Write `Reading.md`. 4. Distil `Snapshot.md` from it. 5. Confirm to user (type, source count, file paths, biggest gap, the explore suggestions).
 
-## Output A — `Snapshot.md` (Marp deck, ~11 slides)
+## Output A — `Snapshot.md` (Marp deck — ~11 slides light, more in medium/deep)
 
-Marp markdown: frontmatter `marp: true` + shared theme; slides split by `---`. Hard cap ~75 words/slide. Tables/bullets, no prose.
+Marp markdown: frontmatter `marp: true` + shared theme; slides split by `---`. Hard cap ~75 words/slide. Tables/bullets, no prose. In medium/deep, add relevant images and tables (see Images rule).
 
 1. **Cover** — topic · date · type · one-line "what it is" · source count · trust legend
 2. **What it is** — definition (quoted) + glossary + don't-confuse-with + before/alternatives
@@ -108,9 +120,13 @@ Follow established grounded-generation methods — don't improvise:
 
 Before a URL goes in either output file, **test that it resolves** (HTTP 2xx/3xx, e.g. `curl -sIL --max-time 15`). A link that fails: drop the source and find another, or mark the claim "source unverified — link dead". No untested links ship. List dead-link drops in the trust-audit.
 
-## Brevity
+### Images (medium & deep)
 
-3-min deck ≈ ~700 words total, ~75/slide. Overflow goes to `Reading.md`, not the deck.
+**Images are claims too — same rules.** Only embed an image whose URL was found on a fetched source and passes link validation; attribute it (source + link). Never invent, guess, or hotlink an image URL you didn't see on a real page. Useful image types: architecture/flow diagrams, market maps, charts, product photos, patent figures. **light** mode: an image only if one is genuinely necessary to grasp the topic. **medium/deep**: include the relevant ones. In Marp, embed with `![alt](url)` and a caption crediting the source.
+
+## Brevity (scales with mode)
+
+Read-time budgets (~230 wpm): **light** ≈ 700 words, **medium** ≈ 1,800, **deep** ≈ 2,800. The ~75-words/slide cap stays per slide — medium/deep get *more slides*, not denser ones. Deck slide count ≈ 11 (light) / 16–20 (medium) / 24–30 (deep). Overflow always goes to `Reading.md`, never crammed into a slide.
 
 ## Deliverables & acceptance
 
@@ -119,6 +135,7 @@ Before a URL goes in either output file, **test that it resolves** (HTTP 2xx/3xx
 - One real example: `examples/aml-scoring/Snapshot.md` + `Reading.md`. Add a product example (`examples/wifi-pill-dispenser/`) if budget allows.
 
 **Acceptance test:**
-1. `/penguru:snapshot AML scoring` → deck renders, ~11 slides, ~3-min read, every claim sourced, tags present, "not found" where due, trust-audit correct, **no external-platform referral**, Next-explore present. Spot-check 3 URLs resolve.
-2. `/penguru:snapshot wifi pill dispenser` → Product/Idea detected; patent + startup scans present; white-space flagged.
+1. `/penguru:snapshot AML scoring` (default light) → deck renders, ~11 slides, ~3-min read, every claim has a tested link or "not found", tags present, trust-audit correct, **no external-platform referral**, Next-explore present. Spot-check 3 URLs resolve.
+2. `/penguru:snapshot wifi pill dispenser` → Product/Idea auto-detected (no flag); patent + startup scans present; white-space flagged.
 3. `/penguru:snapshot ePRO` → cross-domain triage (clinical authorities, not fintech).
+4. `/penguru:snapshot AML scoring --medium` → ~8-min read, more sources/dimension, relevant images + tables embedded with working (tested) image URLs and source captions.

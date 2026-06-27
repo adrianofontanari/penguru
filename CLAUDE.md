@@ -10,9 +10,11 @@ The old per-dimension skills (`n1-definitions`, `n4-literature`) are **archived*
 
 Build the one skill **`/penguru:snapshot <topic>`**. Full design in [`skills/snapshot/SPEC.md`](skills/snapshot/SPEC.md) — read it first, it is the contract.
 
-In short: triage the topic's type, run a **light** web pass over the relevant dimensions (no MCP, no paid APIs), produce two files in `./penguru-research/<topic>/`:
-- `Snapshot.md` — a Marp deck, ~11 slides, a 3-minute skim
-- `Reading.md` — a reference document, fuller light detail per dimension
+In short: triage the topic's type, run a web pass over the relevant dimensions (no MCP, no paid APIs), produce two files in `./penguru-research/<topic>/`:
+- `Snapshot.md` — a Marp deck (skim)
+- `Reading.md` — a reference document (fuller detail per dimension)
+
+Three depth modes, default light: `--light` ~3 min · `--medium` ~8 min · `--deep` ~12 min. Medium/deep go deeper per dimension and embed relevant images + tables; light stays minimal (images only if necessary). Same trust rules in every mode. See SPEC → *Modes*.
 
 Input may be a concept (`AML scoring`, `ePRO`) **or a concrete product idea** (`golf`, `ergonomic chair`, `wifi pill dispenser`) — products trigger a patent scan + startup scan, **auto-detected by the skill (zero friction, the user never activates it)**. See SPEC.
 

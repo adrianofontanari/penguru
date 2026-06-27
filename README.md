@@ -15,8 +15,10 @@ Topics can be abstract (`AML scoring`, `ePRO`) or concrete product ideas (`ergon
 ### `/penguru:snapshot <topic>`
 
 A broad-shallow pass over every relevant dimension, output as two artefacts in `./penguru-research/<topic>/`:
-- **`Snapshot.md`** — a Marp slide deck, a 3-minute skim
+- **`Snapshot.md`** — a Marp slide deck (skim)
 - **`Reading.md`** — a reference document with the fuller detail
+
+Three depth modes (default light): `--light` ~3 min · `--medium` ~8 min · `--deep` ~12 min. Medium and deep go further per dimension and embed relevant images and tables; light stays minimal. Same trust rules in every mode.
 
 Trust is the point: source-typed claims (✅ regulator · ◽ independent · ⚠️ vendor · 💬 opinion), an epistemic rule that flags every number as mandate / empirical / convention, and an explicit *not found* instead of invention.
 
@@ -32,7 +34,8 @@ claude --plugin-dir ~/GitHub/penguru
 ```
 /penguru:snapshot AML scoring
 /penguru:snapshot wifi pill dispenser
-/penguru:snapshot ePRO
+/penguru:snapshot ePRO --medium
+/penguru:snapshot probability of default --deep
 ```
 
 ## Background
