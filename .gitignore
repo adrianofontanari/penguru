@@ -5,3 +5,5 @@
 # build/deployment scaffolding — kept local, not shipped in the public plugin repo
 CLAUDE.md
 skills/snapshot/SPEC.md
+# old node-structure version — kept local, not shipped
+archived/
