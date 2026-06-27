@@ -302,7 +302,7 @@ Source: [URL] ✅/◽/⚠️
 
 Save to: `./penguru-research/$TOPIC - Snapshot.md` (flat in `penguru-research/`, no subfolder, named after the keyword)
 
-**Cross-link:** add an Obsidian wikilink back to the reading note right after the title slide's metadata line: `↪ [[$TOPIC - Reading]]`
+**Cross-link:** add an Obsidian wikilink back to the reading note right after the title slide's metadata line: `↪ [[$TOPIC - Reading]]`. Write it as **plain visible text**, never inside an HTML comment (`<!-- ... -->`) — Obsidian does not render wikilinks inside comments.
 
 **Theme wiring:** the deck frontmatter sets `theme: penguru`. The `penguru` theme lives in `skills/snapshot/assets/penguru.css` (registered via its `/* @theme penguru */` header). To render, point Marp at that file with `--theme-set`. Tell the user the exact command after saving, e.g.:
 
