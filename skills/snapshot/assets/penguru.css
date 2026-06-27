@@ -1,6 +1,8 @@
+/* @theme penguru */
 /* penguru — shared Marp theme
    Clean, high-contrast, Tufte-spirited: whitespace, restrained color, legible tables.
    One theme so every snapshot looks like one product.
+   Register theme name to Marp — required so deck frontmatter `theme: penguru` resolves.
 */
 
 /* ─── Base import ─────────────────────────────────────────────────────────── */

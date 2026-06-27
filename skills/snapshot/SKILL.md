@@ -7,7 +7,16 @@ trigger: User invokes /penguru:snapshot <topic> [--light|--medium|--deep]
 # penguru — snapshot
 
 **Topic:** $ARGUMENTS  
-**Mode:** detect flag in $ARGUMENTS — `--deep` → deep · `--medium` → medium · default → **light**
+**Mode:** detect flag in $ARGUMENTS — `--deep` → deep · `--medium` → medium · `--light` → light.
+
+**If NO mode flag is present in $ARGUMENTS, do not silently default.** Ask the user first, before any search:
+
+> Use `AskUserQuestion` — header "Depth", one question, three options:
+> - **Light (~3 min)** — core dimensions, 1–2 sources each, ~11 slides *(recommended)*
+> - **Medium (~8 min)** — all dimensions fuller, 2–3 sources, images + tables, 16–20 slides
+> - **Deep (~12 min)** — deepest one-shot, 3+ cross-checked sources, rich images, 24–30 slides
+
+A flag in $ARGUMENTS overrides the prompt (skip the question). Trust rules are identical in every mode — only volume/images scale.
 
 ---
 
@@ -137,6 +146,8 @@ For each dimension, pick the **most promising result** from Step 1 and WebFetch 
 
 **Primary source per dimension:** mark the single most trustworthy source fetched. Prefer official/independent over vendor.
 
+**Cross-source corroboration:** any key claim (number, threshold, "standard", market-leader status) needs ≥2 independent sources. If only one source — or only vendor sources — back it, tag the claim accordingly and note "single-source" / "vendor-only". Don't present uncorroborated claims as settled.
+
 **Epistemic rule** — when a source states something is "standard", "typical", "widely used": classify the claim as:
 - ✅ Regulatory mandate — required by a named authority
 - ⚠️ Empirical finding (specific context, don't overgeneralise)
@@ -210,6 +221,8 @@ Source: [URL] ✅/◽/⚠️
 
 ## Market & Players  *(Product mode: "Who Makes It + IP")*
 
+4–6 players. Funding/figures from public web only (press, TechCrunch) — tag vendor sources ⚠️.
+
 | Player | What they do | Positioning | Source |
 |--------|-------------|-------------|--------|
 
@@ -227,8 +240,10 @@ Source: [URL] ✅/◽/⚠️
 
 ## History *(medium/deep only)*
 
-| Year | Event | Source |
-|------|-------|--------|
+3–4 milestones + one disruption event + any notable failure (mark which row is which).
+
+| Year | Event | Kind (milestone / disruption / failure) | Source |
+|------|-------|------------------------------------------|--------|
 
 ## People to Follow *(medium/deep only)*
 
@@ -282,6 +297,16 @@ Source: [URL] ✅/◽/⚠️
 ## Step 6 — Distil Snapshot.md (Marp deck)
 
 Save to: `./penguru-research/$TOPIC/Snapshot.md`
+
+**Theme wiring:** the deck frontmatter sets `theme: penguru`. The `penguru` theme lives in `skills/snapshot/assets/penguru.css` (registered via its `/* @theme penguru */` header). To render, point Marp at that file with `--theme-set`. Tell the user the exact command after saving, e.g.:
+
+```bash
+marp ./penguru-research/$TOPIC/Snapshot.md --theme-set <path-to>/skills/snapshot/assets/penguru.css --html -o ./penguru-research/$TOPIC/Snapshot.html
+# or live preview:
+marp -p -w ./penguru-research/$TOPIC/Snapshot.md --theme-set <path-to>/skills/snapshot/assets/penguru.css
+```
+
+(Without `--theme-set` Marp can't find `penguru` and falls back to the default theme.)
 
 **Marp frontmatter:**
 ```yaml
@@ -358,8 +383,10 @@ Source: [URL] ✅/◽
 
 ## How we got here  *(medium/deep — skip light)*
 
-| Year | Event |
-|------|-------|
+3–4 milestones + 1 disruption + notable failure if any.
+
+| Year | Event | Kind |
+|------|-------|------|
 
 ---
 
@@ -422,4 +449,5 @@ Reply with:
 - Biggest gap ("not found" items)
 - Dead links dropped (if any)
 - Files saved: `./penguru-research/$TOPIC/Snapshot.md` · `./penguru-research/$TOPIC/Reading.md`
+- Render command (the `marp … --theme-set …` line from Step 6) so the user can build the deck
 - Next: explore suggestions (3–5 concepts)
