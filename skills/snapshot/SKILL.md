@@ -187,14 +187,18 @@ curl -sIL --max-time 15 "<url>" | head -5
 
 ## Step 5 — Write Reading.md
 
-Save to: `./penguru-research/$TOPIC/Reading.md`  
-(create folder if it doesn't exist)
+Save to: `./penguru-research/$TOPIC - Reading.md`  
+(no per-topic subfolder — both notes live flat in `penguru-research/`, named after the keyword. Create `penguru-research/` if it doesn't exist.)
+
+**Cross-link:** the first line of the note must be an Obsidian wikilink to its companion deck: `↪ [[$TOPIC - Snapshot]]`
 
 Same section order as the deck, fuller treatment. Quotes, a few more rows, context the deck couldn't fit, complete source list. Not an essay — compressed essence the user returns to. **Word budget: light ≈ 700 · medium ≈ 1,800 · deep ≈ 2,800.**
 
 **Output template:**
 
 ```markdown
+↪ [[$TOPIC - Snapshot]]
+
 # $TOPIC — Reading
 *[date] · mode: [light|medium|deep] · type: [topic type] · [N] sources · [N] dimensions covered*
 
@@ -296,14 +300,16 @@ Source: [URL] ✅/◽/⚠️
 
 ## Step 6 — Distil Snapshot.md (Marp deck)
 
-Save to: `./penguru-research/$TOPIC/Snapshot.md`
+Save to: `./penguru-research/$TOPIC - Snapshot.md` (flat in `penguru-research/`, no subfolder, named after the keyword)
+
+**Cross-link:** add an Obsidian wikilink back to the reading note right after the title slide's metadata line: `↪ [[$TOPIC - Reading]]`
 
 **Theme wiring:** the deck frontmatter sets `theme: penguru`. The `penguru` theme lives in `skills/snapshot/assets/penguru.css` (registered via its `/* @theme penguru */` header). To render, point Marp at that file with `--theme-set`. Tell the user the exact command after saving, e.g.:
 
 ```bash
-marp ./penguru-research/$TOPIC/Snapshot.md --theme-set <path-to>/skills/snapshot/assets/penguru.css --html -o ./penguru-research/$TOPIC/Snapshot.html
+marp "./penguru-research/$TOPIC - Snapshot.md" --theme-set <path-to>/skills/snapshot/assets/penguru.css --html -o "./penguru-research/$TOPIC - Snapshot.html"
 # or live preview:
-marp -p -w ./penguru-research/$TOPIC/Snapshot.md --theme-set <path-to>/skills/snapshot/assets/penguru.css
+marp -p -w "./penguru-research/$TOPIC - Snapshot.md" --theme-set <path-to>/skills/snapshot/assets/penguru.css
 ```
 
 (Without `--theme-set` Marp can't find `penguru` and falls back to the default theme.)
@@ -332,6 +338,7 @@ paginate: true
 
 # $TOPIC
 *[date] · [topic type] · [N] sources · [mode]*
+↪ [[$TOPIC - Reading]]
 
 > "[one-line what it is — fetched definition, quoted]"
 
@@ -448,6 +455,6 @@ Reply with:
 - Dimensions covered vs skipped
 - Biggest gap ("not found" items)
 - Dead links dropped (if any)
-- Files saved: `./penguru-research/$TOPIC/Snapshot.md` · `./penguru-research/$TOPIC/Reading.md`
+- Files saved: `./penguru-research/$TOPIC - Snapshot.md` · `./penguru-research/$TOPIC - Reading.md` (cross-linked via Obsidian wikilinks)
 - Render command (the `marp … --theme-set …` line from Step 6) so the user can build the deck
 - Next: explore suggestions (3–5 concepts)
