@@ -2,9 +2,11 @@
 
 ![penguru](penguru-icon.png)
 
-> A trusted snapshot research agent. One word in → a 3-minute, source-cited orientation on anything.
+> A trusted snapshot research agent. Point it at a topic you know nothing about → a source-cited, hallucination-free map of it in 3, 8, or 12 minutes.
 
-You know nothing about a topic and need a footing — fast and trustworthy. LLMs hallucinate sources, flatten nuance, and can't tell a regulator from a vendor. penguru is **one one-shot skill** that gives you the first three minutes on any topic: broad across every relevant dimension — definitions, market, regulation, history, key people, patents — shallow per dimension, every claim sourced or marked *not found*.
+Exploring something complex from zero is overwhelming — and the real risk is the **unknown unknowns**: the definitions, players, rules and people you don't even know to ask about. LLMs make it worse — they hallucinate sources, flatten nuance, and can't tell a regulator from a vendor.
+
+penguru is **one one-shot skill** that maps a topic reliably without drowning you: broad across every relevant dimension — definitions, market, regulation, history, key people, patents — shallow per dimension, every claim sourced or marked *not found*. You pick the depth (3 / 8 / 12 min); it gets you oriented, not overwhelmed.
 
 It stands on its own. No referrals to other platforms — it ends by suggesting adjacent topics you can snapshot next.
 
