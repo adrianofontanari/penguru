@@ -1,3 +1,7 @@
 .DS_Store
 .env
 .claude/settings.local.json
+
+# build/deployment scaffolding — kept local, not shipped in the public plugin repo
+CLAUDE.md
+skills/snapshot/SPEC.md
