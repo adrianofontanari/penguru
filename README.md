@@ -1,6 +1,6 @@
 # penguru
 
-![penguru](penguru-icon.png)
+<img src="penguru-icon.png" alt="penguru" width="180">
 
 > A trusted snapshot research agent. Point it at a topic you know nothing about → a source-cited, hallucination-free map of it in 3, 8, or 12 minutes.
 
