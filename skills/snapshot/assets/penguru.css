@@ -1,0 +1,234 @@
+/* penguru — shared Marp theme
+   Clean, high-contrast, Tufte-spirited: whitespace, restrained color, legible tables.
+   One theme so every snapshot looks like one product.
+*/
+
+/* ─── Base import ─────────────────────────────────────────────────────────── */
+@import 'default';
+
+/* ─── Custom properties ───────────────────────────────────────────────────── */
+:root {
+  --color-bg:        #fafaf8;
+  --color-text:      #1a1a1a;
+  --color-accent:    #2563eb;   /* restrained blue — links, headings */
+  --color-muted:     #6b6b6b;
+  --color-rule:      #d4d4d4;
+  --color-code-bg:   #f0f0ed;
+  --color-tag-ok:    #15803d;   /* ✅ official */
+  --color-tag-warn:  #b45309;   /* ⚠️ vendor */
+  --color-tag-neutral: #4b5563; /* ◽ independent */
+  --color-slide-num: #9ca3af;
+  --font-body:       'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:       'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+}
+
+/* ─── Section (slide) base ────────────────────────────────────────────────── */
+section {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.55;
+  padding: 48px 56px 40px;
+}
+
+/* ─── Headings ────────────────────────────────────────────────────────────── */
+section h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.3em;
+  border-bottom: 2px solid var(--color-accent);
+  padding-bottom: 0.2em;
+}
+
+section h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-bottom: 0.5em;
+  margin-top: 0.2em;
+}
+
+section h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  margin-bottom: 0.3em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ─── Cover slide ─────────────────────────────────────────────────────────── */
+section.cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+section.cover h1 {
+  font-size: 2.6rem;
+  border-bottom: 3px solid var(--color-accent);
+}
+
+section.cover blockquote {
+  font-size: 1.05rem;
+  color: var(--color-muted);
+  border-left: 3px solid var(--color-accent);
+  padding-left: 1em;
+  margin-top: 0.8em;
+}
+
+/* ─── Blockquote (used for definitions/quotes) ────────────────────────────── */
+blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding: 0.4em 0 0.4em 1em;
+  color: var(--color-text);
+  background: transparent;
+  font-style: italic;
+  margin: 0.6em 0;
+}
+
+blockquote p {
+  margin: 0;
+}
+
+/* ─── Tables — Tufte-clean, legible ──────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin: 0.6em 0;
+}
+
+thead tr {
+  background-color: var(--color-text);
+  color: var(--color-bg);
+}
+
+thead th {
+  padding: 6px 10px;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--color-rule);
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f3f3f0;
+}
+
+tbody td {
+  padding: 5px 10px;
+  vertical-align: top;
+}
+
+/* ─── Lists ───────────────────────────────────────────────────────────────── */
+ul, ol {
+  padding-left: 1.4em;
+  margin: 0.3em 0;
+}
+
+li {
+  margin-bottom: 0.25em;
+  line-height: 1.5;
+}
+
+/* ─── Code & monospace ────────────────────────────────────────────────────── */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  background: var(--color-code-bg);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+  color: var(--color-text);
+}
+
+pre {
+  background: var(--color-code-bg);
+  padding: 0.8em 1em;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+}
+
+/* ─── Links ───────────────────────────────────────────────────────────────── */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ─── Horizontal rule ─────────────────────────────────────────────────────── */
+hr {
+  border: none;
+  border-top: 1px solid var(--color-rule);
+  margin: 0.8em 0;
+}
+
+/* ─── Images & captions ───────────────────────────────────────────────────── */
+img {
+  max-width: 100%;
+  max-height: 340px;
+  object-fit: contain;
+  display: block;
+  margin: 0.5em auto;
+}
+
+/* Caption pattern: italicised em after image */
+img + em, p > img ~ em {
+  display: block;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  margin-top: 0.2em;
+}
+
+/* ─── Pagination ──────────────────────────────────────────────────────────── */
+section::after {
+  font-size: 0.75rem;
+  color: var(--color-slide-num);
+  bottom: 14px;
+  right: 24px;
+}
+
+/* ─── Trust-tag emphasis ──────────────────────────────────────────────────── */
+/* Usage: wrap tag in <span class="ok"> etc. — or rely on emoji rendering */
+.tag-ok    { color: var(--color-tag-ok);      font-weight: 600; }
+.tag-warn  { color: var(--color-tag-warn);    font-weight: 600; }
+.tag-info  { color: var(--color-tag-neutral); font-weight: 600; }
+
+/* ─── Trust-audit slide ───────────────────────────────────────────────────── */
+section.audit h2 {
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+/* ─── "Not found" inline ─────────────────────────────────────────────────── */
+em.not-found {
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+/* ─── Responsive scaling (Marp default is 1280×720) ──────────────────────── */
+@media (max-width: 900px) {
+  section {
+    font-size: 15px;
+    padding: 32px 36px 28px;
+  }
+
+  section h1 { font-size: 1.6rem; }
+  section h2 { font-size: 1.15rem; }
+}

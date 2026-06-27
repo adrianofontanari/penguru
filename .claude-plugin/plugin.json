@@ -3,5 +3,5 @@
   "version": "0.1.0",
   "description": "Trusted snapshot research agent — one word into a 3-minute, source-cited orientation on any topic.",
   "author": "adrianofontanari",
-  "skills": []
+  "skills": ["snapshot"]
 }
