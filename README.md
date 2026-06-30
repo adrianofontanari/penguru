@@ -24,8 +24,6 @@ Three depth modes (default light): `--light` ~3 min · `--medium` ~8 min · `--d
 
 Trust is the point: source-typed claims (✅ regulator · ◽ independent · ⚠️ vendor · 💬 opinion), an epistemic rule that flags every number as mandate / empirical / convention, and an explicit *not found* instead of invention.
 
-> Design: [`skills/snapshot/SPEC.md`](skills/snapshot/SPEC.md).
-
 ## Install
 
 ```bash
@@ -43,8 +41,6 @@ claude --plugin-dir ~/GitHub/penguru
 ## Background
 
 Built on a faceted knowledge model — DIKW (Ackoff), Ranganathan's faceted classification, Information Foraging Theory (Pirolli & Card) — and learning-science principles: cite everything, respect working memory, reference documents over essays.
-
-Earlier per-dimension skills (`n1-definitions`, `n4-literature`) are archived under [`archived/`](archived/).
 
 ## Credits
 
